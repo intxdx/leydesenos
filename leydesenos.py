@@ -17,8 +17,43 @@ st.set_page_config(page_title="Academia CAS — Ley de Senos", layout="centered"
 # ══════════════════════════════════════════════════════════════════
 st.markdown("""
 <style>
-  /* fondo general */
-  .stApp { background: #f0f4ff; }
+  /* ── Forzar modo claro completo (evita texto blanco en móvil) ── */
+  .stApp, .stApp * { color-scheme: light !important; }
+  .stApp {
+    background: #f0f4ff !important;
+  }
+
+  /* Texto base siempre oscuro */
+  .stApp p, .stApp span, .stApp div,
+  .stApp label, .stApp li, .stApp h1,
+  .stApp h2, .stApp h3, .stApp h4 {
+    color: #1e293b !important;
+  }
+
+  /* Markdown nativo de Streamlit */
+  [data-testid="stMarkdownContainer"] p,
+  [data-testid="stMarkdownContainer"] li,
+  [data-testid="stMarkdownContainer"] strong {
+    color: #1e293b !important;
+  }
+
+  /* Títulos / subheaders */
+  [data-testid="stHeadingWithActionElements"] h2,
+  [data-testid="stHeadingWithActionElements"] h3 {
+    color: #1e3a8a !important;
+  }
+
+  /* Captions */
+  [data-testid="stCaptionContainer"] p { color: #64748b !important; }
+
+  /* Info / success / error boxes */
+  [data-testid="stAlert"] p { color: inherit !important; }
+
+  /* Number input label */
+  [data-testid="stNumberInput"] label { color: #1e293b !important; }
+
+  /* Expander título */
+  [data-testid="stExpander"] summary p { color: #1e293b !important; }
 
   /* header/logo */
   .cas-header {
@@ -30,15 +65,15 @@ st.markdown("""
     width: 64px; height: 64px; border-radius: 50%;
     background: white; display: flex; align-items: center;
     justify-content: center; flex-shrink: 0;
-    font-size: 26px; font-weight: 900; color: #1e3a8a;
+    font-size: 26px; font-weight: 900; color: #1e3a8a !important;
     box-shadow: 0 2px 12px rgba(0,0,0,.25);
     font-family: Georgia, serif; letter-spacing: -1px;
   }
   .cas-header-text h1 {
-    margin: 0; color: white; font-size: 22px; font-weight: 700;
+    margin: 0; color: white !important; font-size: 22px; font-weight: 700;
   }
   .cas-header-text p {
-    margin: 4px 0 0; color: #bfdbfe; font-size: 13px;
+    margin: 4px 0 0; color: #bfdbfe !important; font-size: 13px;
   }
 
   /* tarjeta de métricas */
@@ -58,17 +93,17 @@ st.markdown("""
     letter-spacing: .06em; margin-top: 4px;
   }
   .mc-total  { background:#eff6ff; }
-  .mc-total .val  { color:#1d4ed8; }
-  .mc-total .lbl  { color:#3b82f6; }
+  .mc-total .val  { color:#1d4ed8 !important; }
+  .mc-total .lbl  { color:#3b82f6 !important; }
   .mc-ok    { background:#f0fdf4; }
-  .mc-ok .val    { color:#16a34a; }
-  .mc-ok .lbl    { color:#22c55e; }
+  .mc-ok .val    { color:#16a34a !important; }
+  .mc-ok .lbl    { color:#22c55e !important; }
   .mc-fail  { background:#fff1f2; }
-  .mc-fail .val  { color:#dc2626; }
-  .mc-fail .lbl  { color:#f87171; }
+  .mc-fail .val  { color:#dc2626 !important; }
+  .mc-fail .lbl  { color:#f87171 !important; }
   .mc-pct   { background:#fdf4ff; }
-  .mc-pct .val   { color:#7c3aed; }
-  .mc-pct .lbl   { color:#a855f7; }
+  .mc-pct .val   { color:#7c3aed !important; }
+  .mc-pct .lbl   { color:#a855f7 !important; }
 
   /* resumen final */
   .resumen-card {
@@ -76,20 +111,20 @@ st.markdown("""
     box-shadow: 0 4px 24px rgba(0,0,0,.1); margin-top: 8px;
   }
   .resumen-title {
-    font-size: 22px; font-weight: 800; color: #1e3a8a;
+    font-size: 22px; font-weight: 800; color: #1e3a8a !important;
     margin-bottom: 6px;
   }
   .resumen-sub {
-    font-size: 14px; color: #64748b; margin-bottom: 20px;
+    font-size: 14px; color: #64748b !important; margin-bottom: 20px;
   }
   .badge {
     display:inline-block; padding: 6px 16px; border-radius: 999px;
     font-size: 13px; font-weight: 700; letter-spacing:.03em;
   }
-  .badge-gold   { background:#fef3c7; color:#92400e; }
-  .badge-silver { background:#f1f5f9; color:#475569; }
-  .badge-bronze { background:#fdf4ff; color:#6d28d9; }
-  .badge-retry  { background:#fff1f2; color:#be123c; }
+  .badge-gold   { background:#fef3c7; color:#92400e !important; }
+  .badge-silver { background:#f1f5f9; color:#475569 !important; }
+  .badge-bronze { background:#fdf4ff; color:#6d28d9 !important; }
+  .badge-retry  { background:#fff1f2; color:#be123c !important; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -97,7 +132,7 @@ st.markdown("""
 # HEADER / LOGO
 # ══════════════════════════════════════════════════════════════════
 # Coloca logo.png en la misma carpeta que este archivo para mostrarlo.
-_logo_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Logo.png")
+_logo_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logo.png")
 
 if os.path.exists(_logo_path):
     with open(_logo_path, "rb") as _f:
